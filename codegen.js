@@ -24,9 +24,6 @@ module.exports = function (ast) {
 
 	return [
 		"(function (np) {",
-			"var parseInt = np.parseInt;",
-			"var parseDecimal = np.parseDecimal;",
-			"var op = { '+': np['+'], '-': np['-'], '*': np['*'], '/': np['/'] };",
 		].concat(
 			Object.keys(constDecls).map(function (literal) {
 				return "var " + constRefs[literal] + " = " + constDecls[literal] + ";";

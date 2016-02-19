@@ -85,23 +85,12 @@ explanation:
 
     // `np` below is the number provider
     (function (np) {
-        // The relevant bits are read out from the given number provider
-        // to the local closure, so changes to np no longer interfere:
-        var parseInt = np.parseInt;
-        var parseDecimal = np.parseDecimal;
-        var op = {
-            '+': np['+'],
-            '-': np['-'],
-            '*': np['*'],
-            '/': np['/']
-        };
-
         // The constants in the expression are parsed and the results cached:
-        var c0 = parseInt('10');
+        var c0 = np.parseInt('10');
 
         // Given this closure, the generated function will work as required:
         return function ($0, $1) {
-            return op['+'](op['*'](c0, $0), $1);
+            return np['+'](np['*'](c0, $0), $1);
         };
     })
 

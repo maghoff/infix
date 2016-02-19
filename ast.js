@@ -5,7 +5,7 @@ function BinaryOperation(lhs, op, rhs) {
 }
 
 BinaryOperation.prototype.asJS = function (constName, paramName) {
-	return "op['" + this.op + "']" +
+	return "np['" + this.op + "']" +
 		"(" + this.lhs.asJS(constName, paramName) + ", " + this.rhs.asJS(constName, paramName) + ")";
 };
 
@@ -14,7 +14,7 @@ function IntegerLiteral(literal) {
 }
 
 IntegerLiteral.prototype.asJS = function (constName) {
-	return constName(this.literal, "parseInt('" + this.literal + "')");
+	return constName(this.literal, "np.parseInt('" + this.literal + "')");
 };
 
 function DecimalLiteral(literal, wholePart, decimalPart) {
@@ -24,7 +24,7 @@ function DecimalLiteral(literal, wholePart, decimalPart) {
 }
 
 DecimalLiteral.prototype.asJS = function (constName) {
-	return constName(this.literal, "parseDecimal('" + this.wholePart + "', '" + this.decimalPart + "')");
+	return constName(this.literal, "np.parseDecimal('" + this.wholePart + "', '" + this.decimalPart + "')");
 };
 
 function Reference(name) {
