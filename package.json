@@ -1,0 +1,17 @@
+{
+  "name": "infix",
+  "version": "1.0.0",
+  "description": "An implementation of infix notation for custom number types in JavaScript",
+  "devDependencies": {
+    "mocha": "^2.4.5"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha"
+  },
+  "author": "Magnus Hoff <maghoff@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/maghoff/infix.git"
+  }
+}
