@@ -67,7 +67,7 @@ Similarly to `evaluatorFor` above, `infix` also offers `compilerFor`:
 
     var compiler = infix.compilerFor(infix.nativeNumberProvider);
     var g = compiler("10*$0+$1");
-    var h = compiler("$1/$0+$1");
+    var h = compiler("$1/$0+$0");
     console.log(g(2, -3), h(2, 10));
     // `17 7` is logged
 
