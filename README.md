@@ -100,7 +100,7 @@ time, saving execution time in a deploy scenario.
 
 Implementing a number provider
 ==============================
-All of this is not very valuable before you supply another number provider.
+All of this is not very valuable until you supply another number provider.
 Fortunately, the interface required for a number provider is fairly simple:
 
     {
