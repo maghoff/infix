@@ -66,9 +66,10 @@ compiling a given expression to a function:
 Similarly to `evaluatorFor` above, `infix` also offers `compilerFor`:
 
     var compiler = infix.compilerFor(infix.nativeNumberProvider);
-    var g = compiler("10*$0+$1");
-    console.log(g(2, -3), g(10, 2));
-    // Again, `17 102` is logged
+    var g = compiler("10 * $0 + $1");
+    var h = compiler("$1 * $0 - $1");
+    console.log(g(2, -3), h(2, 10));
+    // `17 10` is logged
 
 The compilation process will also give the chosen number provider a chance to
 parse and cache all the constants needed in the expression up front.
