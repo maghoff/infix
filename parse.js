@@ -1,6 +1,4 @@
-var ast = require('./ast');
-
-function parse_factor(input) {
+function parse_factor(input, handler) {
 	var pattern = /^\s*(((\d+) (\d+)\/(\d+))|(([-+])?(\d+)(\.(\d+))?)|(\$(\d+))|(\())/;
 	var match = input.match(pattern);
 	if (!match) throw new Error("Expected number, found " + JSON.stringify(input.substr(0, 6)) + "...");
@@ -14,17 +12,17 @@ function parse_factor(input) {
 		var after = match[NUM+4] || "";
 		if (!after) {
 			return [
-				new ast.IntegerLiteral(match[1]),
+				handler.integerLiteral(match[1]),
 				rest
 			];
 		} else {
 			return [
-				new ast.DecimalLiteral(match[1], sign + before, after),
+				handler.decimalLiteral(match[1], sign + before, after),
 				rest
 			];
 		}
 	} else if (match[PAR]) {
-		var nested = parse_expression(rest);
+		var nested = parse_expression(rest, handler);
 		var closing_pattern = /^\s*\)/;
 		if (!(match = nested[1].match(closing_pattern))) throw new Error("Expected ')', found " + JSON.stringify(nested[1].substr(0, 6)) + "...");
 		return [
@@ -33,20 +31,20 @@ function parse_factor(input) {
 		];
 	} else if (match[FRAC]) {
 		return [
-			new ast.BinaryOperation(
-				new ast.IntegerLiteral(match[FRAC+1]),
+			handler.binaryOperation(
+				handler.integerLiteral(match[FRAC+1]),
 				'+',
-				new ast.BinaryOperation(
-					new ast.IntegerLiteral(match[FRAC+2]),
+				handler.binaryOperation(
+					handler.integerLiteral(match[FRAC+2]),
 					'/',
-					new ast.IntegerLiteral(match[FRAC+3])
+					handler.integerLiteral(match[FRAC+3])
 				)
 			),
 			rest
 		];
 	} else if (match[REF]) {
 		return [
-			new ast.Reference(match[REF+1]),
+			handler.reference(match[REF+1]),
 			rest
 		];
 	} else {
@@ -54,44 +52,44 @@ function parse_factor(input) {
 	}
 }
 
-function parse_term(input) {
-	var lhs_result = parse_factor(input);
+function parse_term(input, handler) {
+	var lhs_result = parse_factor(input, handler);
 	var lhs = lhs_result[0], rest = lhs_result[1];
 
 	var pattern = /^\s*([*\/])/;
 	var match;
 	while (match = rest.match(pattern)) {
 		rest = rest.substr(match[0].length);
-		var rhs_result = parse_factor(rest);
+		var rhs_result = parse_factor(rest, handler);
 		var rhs = rhs_result[0];
 		rest = rhs_result[1];
 
-		lhs = new ast.BinaryOperation(lhs, match[1], rhs);
+		lhs = handler.binaryOperation(lhs, match[1], rhs);
 	}
 
 	return [ lhs, rest ];
 }
 
-function parse_expression(input) {
-	var lhs_result = parse_term(input);
+function parse_expression(input, handler) {
+	var lhs_result = parse_term(input, handler);
 	var lhs = lhs_result[0], rest = lhs_result[1];
 
 	var pattern = /^\s*([+-])/;
 	var match;
 	while (match = rest.match(pattern)) {
 		rest = rest.substr(match[0].length);
-		var rhs_result = parse_term(rest);
+		var rhs_result = parse_term(rest, handler);
 		var rhs = rhs_result[0];
 		rest = rhs_result[1];
 
-		lhs = new ast.BinaryOperation(lhs, match[1], rhs);
+		lhs = handler.binaryOperation(lhs, match[1], rhs);
 	}
 
 	return [ lhs, rest ];
 }
 
-function parse(input) {
-	var result = parse_expression(input);
+function parse(input, handler) {
+	var result = parse_expression(input, handler);
 	if (!result[1].match(/^\s*$/)) throw new Error("Unexpected: " + JSON.stringify(result[1].substr(0, 6)) + "...");
 	return result[0];
 }

@@ -35,8 +35,15 @@ Reference.prototype.asJS = function (constName, paramName) {
 	return paramName(this.name);
 };
 
+var parseHandler = {
+	integerLiteral: function (x) { return new IntegerLiteral(x); },
+	decimalLiteral: function (x, y, z) { return new DecimalLiteral(x, y, z); },
+	binaryOperation: function (x, y, z) { return new BinaryOperation(x, y, z); },
+	reference: function (x) { return new Reference(x); },
+};
 
 exports.BinaryOperation = BinaryOperation;
 exports.IntegerLiteral = IntegerLiteral;
 exports.DecimalLiteral = DecimalLiteral;
 exports.Reference = Reference;
+exports.parseHandler = parseHandler;
