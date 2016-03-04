@@ -1,13 +1,13 @@
 var assert = require('assert');
-var calcit = require('..');
+var infix = require('..');
 
 describe('compile', function() {
 	it('should return a function', function () {
-		assert.equal('function', typeof calcit.compile("1", calcit.nativeNumberProvider));
+		assert.equal('function', typeof infix.compile("1", infix.nativeNumberProvider));
 	});
 
 	describe('compilerFor nativeNumberProvider', function () {
-		var compile = calcit.compilerFor(calcit.nativeNumberProvider);
+		var compile = infix.compilerFor(infix.nativeNumberProvider);
 
 		it('should return a function', function () {
 			assert.equal('function', typeof compile("1"));
@@ -52,7 +52,7 @@ describe('compile', function() {
 	});
 
 	describe('evaluatorFor nativeNumberProvider', function () {
-		var evaluate = calcit.evaluatorFor(calcit.nativeNumberProvider);
+		var evaluate = infix.evaluatorFor(infix.nativeNumberProvider);
 
 		it('should evaluate a constant', function () {
 			assert.equal(3.14, evaluate("3.14"));
