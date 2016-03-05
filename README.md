@@ -116,6 +116,21 @@ time, saving execution time in a deploy scenario. When compiling everything
 ahead of time, the `infix` library is no longer needed for deploy, so this can
 also be a win for deploy asset size.
 
+Using with untrusted input
+==========================
+`infix` can also be used for evaluating expressions in user input. In this
+context it can be confusing to allow the placeholders. If you want to offer
+support for evaluating simple arithmetic expressions, use the evaluator that
+rejects references:
+
+    var evaluate = infix.noReferences.evaluatorFor(infix.nativeNumberProvider);
+
+    console.log(evaluate("10/2"));
+    // `5` is logged
+
+    console.log(evaluate("10/$0", 2));
+    // An exception is thrown
+
 Implementing a number provider
 ==============================
 All of this is not very valuable until you supply another number provider.
