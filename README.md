@@ -74,6 +74,22 @@ Similarly to `evaluatorFor` above, `infix` also offers `compilerFor`:
 The compilation process will also give the chosen number provider a chance to
 parse and cache all the constants needed in the expression up front.
 
+Compiling the expression ahead of time can be an impediment to readability. A
+compromise between the two strategies is the memoizing evaluator, which compiles
+any expressions ahead of caches them for reuse later:
+
+    var evaluate = infix.memoizing.evaluatorFor(infix.nativeNumberProvider);
+
+    for (var i = 0; i < 100; i++) {
+        console.log(evaluate("100 - $0", i));
+    }
+    // The numbers 100..1 are logged in descending order
+
+For one-off expressions, the non-memoizing evaluator is the most efficient. For
+loops like the above, the memoizing evaluator is ~5 times quicker than the
+non-memoizing evaluator. Still, explicitly compiling the expression and directly
+referencing the function is an additional ~37 times faster.
+
 For even more eager compilation, it is possible to generate the JavaScript
 source code for the generated functions by using `infix.parse` and
 `infix.codegen`:
@@ -96,7 +112,9 @@ explanation:
     })
 
 The output from `codegen` can be used for compiling the expression ahead of
-time, saving execution time in a deploy scenario.
+time, saving execution time in a deploy scenario. When compiling everything
+ahead of time, the `infix` library is no longer needed for deploy, so this can
+also be a win for deploy asset size.
 
 Implementing a number provider
 ==============================
