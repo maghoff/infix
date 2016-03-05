@@ -10,4 +10,5 @@ exports.evaluate = evaluate.evaluate;
 exports.evaluatorFor = evaluate.evaluatorFor;
 exports.memoizing = require('./memoizing');
 exports.nativeNumberProvider = require('./native_number_provider');
+exports.noReferences = require('./no_references');
 exports.parse = function (source, parseHandler) { return parse(source, parseHandler || ast.parseHandler); };
