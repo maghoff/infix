@@ -1,6 +1,6 @@
 {
   "name": "infix",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "An implementation of infix notation for custom number types in JavaScript",
   "devDependencies": {
     "mocha": "^2.4.5"
@@ -15,9 +15,9 @@
     "url": "https://github.com/maghoff/infix.git"
   },
   "keywords": [
-	"calculator",
-	"parser",
-	"expression",
-	"arithmetic"
+    "calculator",
+    "parser",
+    "expression",
+    "arithmetic"
   ]
 }
