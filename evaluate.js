@@ -19,11 +19,9 @@ function evaluate(source, numberProvider) {
 function evaluatorFor(numberProvider) {
 	return function (source) {
 		var args = Array.prototype.slice.call(arguments, 1);
+		var parseHandler = parseHandlerFactory.call(this, numberProvider, args);
 
-		return evaluate.apply(
-			this,
-			[source, numberProvider].concat(args)
-		);
+		return parse(source, parseHandler);
 	};
 }
 
