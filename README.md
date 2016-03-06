@@ -4,7 +4,7 @@ Installation
     npm install infix
 
 However, `infix` is not really useful on its own and should be coupled with a
-number provider.
+[number provider](#implementing-a-number-provider).
 
 Motivation
 ==========
