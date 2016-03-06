@@ -3,7 +3,7 @@ var codegen = require('./codegen');
 var parse = require('./parse');
 
 function compile(source, numberProvider) {
-	return eval(codegen(parse(source, ast.parseHandler)))(numberProvider);
+	return eval(codegen(source))(numberProvider);
 }
 
 function compilerFor(numberProvider) {

@@ -1,3 +1,5 @@
+var parse = require('./parse');
+
 function CodeGenerator() {
 	if (!(this instanceof CodeGenerator)) return new CodeGenerator();
 
@@ -36,8 +38,13 @@ CodeGenerator.prototype.reference = function (id) {
 	return this.paramName(id);
 };
 
-CodeGenerator.prototype.generateCode = function (ast) {
-	var expr = ast.visit(this);
+function parseOrVisit(sourceOrAst, parseHandler) {
+	if (typeof sourceOrAst === "string") return parse(sourceOrAst, parseHandler);
+	else return sourceOrAst.visit(parseHandler);
+}
+
+CodeGenerator.prototype.generateCode = function (source) {
+	var expr = parseOrVisit(source, this);
 
 	var params = [];
 
@@ -60,7 +67,7 @@ CodeGenerator.prototype.generateCode = function (ast) {
 };
 
 
-module.exports = function (ast) {
+module.exports = function (source) {
 	var codeGenerator = new CodeGenerator();
-	return codeGenerator.generateCode(ast);
+	return codeGenerator.generateCode(source);
 }
