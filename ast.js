@@ -11,9 +11,12 @@ function BinaryOperation(lhs, op, rhs) {
 	this.rhs = rhs;
 }
 
-BinaryOperation.prototype.asJS = function (constName, paramName) {
-	return "np['" + this.op + "']" +
-		"(" + this.lhs.asJS(constName, paramName) + ", " + this.rhs.asJS(constName, paramName) + ")";
+BinaryOperation.prototype.visit = function (parseHandler) {
+	return parseHandler.binaryOperation(
+		this.lhs.visit(parseHandler),
+		this.op,
+		this.rhs.visit(parseHandler)
+	);
 };
 
 BinaryOperation.prototype.asExpression = function (parentPrecedence) {
@@ -26,8 +29,8 @@ function IntegerLiteral(literal) {
 	this.literal = literal;
 }
 
-IntegerLiteral.prototype.asJS = function (constName) {
-	return constName(this.literal, "np.parseInt('" + this.literal + "')");
+IntegerLiteral.prototype.visit = function (parseHandler) {
+	return parseHandler.integerLiteral(this.literal);
 };
 
 IntegerLiteral.prototype.asExpression = function () {
@@ -40,8 +43,8 @@ function DecimalLiteral(literal, wholePart, decimalPart) {
 	this.decimalPart = decimalPart;
 }
 
-DecimalLiteral.prototype.asJS = function (constName) {
-	return constName(this.literal, "np.parseDecimal('" + this.wholePart + "', '" + this.decimalPart + "')");
+DecimalLiteral.prototype.visit = function (parseHandler) {
+	return parseHandler.decimalLiteral(this.literal, this.wholePart, this.decimalPart);
 };
 
 DecimalLiteral.prototype.asExpression = function () {
@@ -52,8 +55,8 @@ function Reference(name) {
 	this.name = name;
 }
 
-Reference.prototype.asJS = function (constName, paramName) {
-	return paramName(this.name);
+Reference.prototype.visit = function (parseHandler) {
+	return parseHandler.reference(this.name);
 };
 
 Reference.prototype.asExpression = function () {
