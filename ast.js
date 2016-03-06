@@ -1,10 +1,3 @@
-var precedence = {
-	'+': 1,
-	'-': 1,
-	'*': 2,
-	'/': 2,
-};
-
 function BinaryOperation(lhs, op, rhs) {
 	this.lhs = lhs;
 	this.op = op;
@@ -19,22 +12,12 @@ BinaryOperation.prototype.visit = function (parseHandler) {
 	);
 };
 
-BinaryOperation.prototype.asExpression = function (parentPrecedence) {
-	var parenthesis = precedence[this.op] < parentPrecedence;
-	var core = this.lhs.asExpression(precedence[this.op]) + this.op + this.rhs.asExpression(precedence[this.op] + 1);
-	return parenthesis ? "(" + core + ")" : core;
-};
-
 function IntegerLiteral(literal) {
 	this.literal = literal;
 }
 
 IntegerLiteral.prototype.visit = function (parseHandler) {
 	return parseHandler.integerLiteral(this.literal);
-};
-
-IntegerLiteral.prototype.asExpression = function () {
-	return this.literal;
 };
 
 function DecimalLiteral(literal, wholePart, decimalPart) {
@@ -47,20 +30,12 @@ DecimalLiteral.prototype.visit = function (parseHandler) {
 	return parseHandler.decimalLiteral(this.literal, this.wholePart, this.decimalPart);
 };
 
-DecimalLiteral.prototype.asExpression = function () {
-	return this.literal;
-};
-
 function Reference(name) {
 	this.name = name;
 }
 
 Reference.prototype.visit = function (parseHandler) {
 	return parseHandler.reference(this.name);
-};
-
-Reference.prototype.asExpression = function () {
-	return "$" + this.name;
 };
 
 var parseHandler = {

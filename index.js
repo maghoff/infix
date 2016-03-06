@@ -8,6 +8,7 @@ exports.compile = compile.compile;
 exports.compilerFor = compile.compilerFor;
 exports.evaluate = evaluate.evaluate;
 exports.evaluatorFor = evaluate.evaluatorFor;
+exports.generateExpression = require('./expression_generator').generate;
 exports.memoizing = require('./memoizing');
 exports.nativeNumberProvider = require('./native_number_provider');
 exports.noReferences = require('./no_references');

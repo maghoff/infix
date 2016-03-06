@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
-var ast = require('./ast');
+var ast = require('../ast');
+var expressionGenerator = require('../expression_generator');
 
 function generateTree(depth) {
 	if (depth === 1) {
@@ -17,5 +18,5 @@ function generateTree(depth) {
 }
 
 for (var i=0; i<10000; ++i) {
-	console.log(generateTree(5).asExpression());
+	console.log(expressionGenerator.generate(generateTree(5)));
 }
