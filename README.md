@@ -91,11 +91,9 @@ non-memoizing evaluator. Still, explicitly compiling the expression and directly
 referencing the function is an additional ~37 times faster.
 
 For even more eager compilation, it is possible to generate the JavaScript
-source code for the generated functions by using `infix.parse` and
-`infix.codegen`:
+source code for the generated functions by using `infix.codegen`:
 
-    var ast = infix.parse("10*$0+$1");
-    console.log(infix.codegen(ast));
+    console.log(infix.codegen("10*$0+$1"));
 
 The output from this is compact, but we can prettify it and add comments for
 explanation:
