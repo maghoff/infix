@@ -10,7 +10,10 @@ function parseHandlerFactory(numberProvider, args) {
 };
 
 function evaluate(source, numberProvider) {
-	var args = Array.prototype.slice.call(arguments, 2);
+	// Copy arguments this silly way to substantially help optimizer:
+	var args = new Array(arguments.length - 2);
+	for (var i = 0; i < args.length; ++i) args[i] = arguments[i + 2];
+
 	var parseHandler = parseHandlerFactory.call(this, numberProvider, args);
 
 	return parse(source, parseHandler);
@@ -18,7 +21,10 @@ function evaluate(source, numberProvider) {
 
 function evaluatorFor(numberProvider) {
 	return function (source) {
-		var args = Array.prototype.slice.call(arguments, 1);
+		// Copy arguments this silly way to substantially help optimizer:
+		var args = new Array(arguments.length - 1);
+		for (var i = 0; i < args.length; ++i) args[i] = arguments[i + 1];
+
 		var parseHandler = parseHandlerFactory.call(this, numberProvider, args);
 
 		return parse(source, parseHandler);

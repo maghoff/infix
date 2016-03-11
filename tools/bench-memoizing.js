@@ -51,8 +51,8 @@ function trial(inner, iterations) {
 }
 
 var a = trial(explicitlyCompile, 10000000);
-var b = trial(memoizing, 100000);
-var c = trial(nonMemoizing, 50000);
+var b = trial(memoizing, 1000000);
+var c = trial(nonMemoizing, 100000);
 
 console.log(`explicitlyCompile is ${(b/a).toFixed(2)} times as fast as memoizing`);
 console.log(`memoizing is ${(c/b).toFixed(2)} times as fast as nonMemoizing`);

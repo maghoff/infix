@@ -86,9 +86,9 @@ any expressions and stores the result for reuse later:
     // The numbers 100..1 are logged in descending order
 
 For one-off expressions, the non-memoizing evaluator is the most efficient. For
-loops like the above, the memoizing evaluator is ~4 times quicker than the
+loops like the above, the memoizing evaluator is about 10 times quicker than the
 non-memoizing evaluator. Still, explicitly compiling the expression and directly
-referencing the function is an additional ~37 times faster.
+referencing the function is an additional ~10 times faster.
 
 For even more eager compilation, it is possible to generate the JavaScript
 source code for the generated functions by using `infix.codegen`:
