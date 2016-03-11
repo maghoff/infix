@@ -75,13 +75,13 @@ The compilation process will also give the chosen number provider a chance to
 parse and cache all the constants needed in the expression up front.
 
 Compiling the expression ahead of time can be an impediment to readability. A
-compromise between the two strategies is the memoizing evaluator, which compiles
-any expressions and stores the result for reuse later:
+compromise between the two strategies is the memoizing compiler, which compiles
+any expressions and remembers the result for reuse later:
 
-    var evaluate = infix.memoizing.evaluatorFor(infix.nativeNumberProvider);
+    var compile = infix.memoizing.compilerFor(infix.nativeNumberProvider);
 
     for (var i = 0; i < 100; i++) {
-        console.log(evaluate("100 - $0", i));
+        console.log(compile("100 - $0")(i));
     }
     // The numbers 100..1 are logged in descending order
 
