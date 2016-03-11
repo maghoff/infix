@@ -76,7 +76,7 @@ parse and cache all the constants needed in the expression up front.
 
 Compiling the expression ahead of time can be an impediment to readability. A
 compromise between the two strategies is the memoizing evaluator, which compiles
-any expressions ahead of caches them for reuse later:
+any expressions and stores the result for reuse later:
 
     var evaluate = infix.memoizing.evaluatorFor(infix.nativeNumberProvider);
 
