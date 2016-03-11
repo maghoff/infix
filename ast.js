@@ -1,3 +1,5 @@
+'use strict';
+
 function BinaryOperation(lhs, op, rhs) {
 	this.lhs = lhs;
 	this.op = op;

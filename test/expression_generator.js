@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('assert');
 var ast = require('../ast');
 var evaluate = require('../evaluate');

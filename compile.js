@@ -1,3 +1,5 @@
+'use strict';
+
 var ast = require('./ast');
 var codegen = require('./codegen');
 var parse = require('./parse');

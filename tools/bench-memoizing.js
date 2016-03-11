@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+'use strict';
+
 var infix = require('..');
 
 function explicitlyCompile(iterations) {

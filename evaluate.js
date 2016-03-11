@@ -1,3 +1,5 @@
+'use strict';
+
 var parse = require('./parse');
 
 function parseHandlerFactory(numberProvider, args) {

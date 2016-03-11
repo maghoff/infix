@@ -1,3 +1,5 @@
+'use strict';
+
 function parse_factor(input, handler) {
 	var pattern = /^\s*(((\d+) (\d+)\/(\d+))|(([-+])?(\d+)(\.(\d+))?)|(\$(\d+))|(\())/;
 	var match = input.match(pattern);

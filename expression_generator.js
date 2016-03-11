@@ -1,3 +1,5 @@
+'use strict';
+
 var precedence = {
 	'+': 1,
 	'-': 1,
