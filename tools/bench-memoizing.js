@@ -4,8 +4,10 @@
 
 var infix = require('..');
 
+var exp = infix.generateExpression(require('./random_expression')(10, 1));
+
 function explicitlyCompile(iterations) {
-	var f = infix.compile("100 - $0", infix.nativeNumberProvider);
+	var f = infix.compile(exp, infix.nativeNumberProvider);
 
 	var x = 0;
 	for (var i = 0; i < iterations; i++) {
@@ -19,7 +21,7 @@ function memoizingCompiler(iterations) {
 
 	var x = 0;
 	for (var i = 0; i < iterations; i++) {
-		x += compile("100 - $0")(i);
+		x += compile(exp)(i);
 	}
 	return x;
 }
@@ -29,7 +31,7 @@ function memoizingEvaluator(iterations) {
 
 	var x = 0;
 	for (var i = 0; i < iterations; i++) {
-		x += evaluate("100 - $0", i);
+		x += evaluate(exp, i);
 	}
 	return x;
 }
@@ -39,7 +41,7 @@ function nonMemoizing(iterations) {
 
 	var x = 0;
 	for (var i = 0; i < iterations; i++) {
-		x += evaluate("100 - $0", i);
+		x += evaluate(exp, i);
 	}
 	return x;
 }
@@ -62,10 +64,10 @@ function trial(inner, iterations) {
 	return avg;
 }
 
-var a = trial(explicitlyCompile, 10000000);
-var b = trial(memoizingCompiler, 2000000);
-var c = trial(memoizingEvaluator, 1000000);
-var d = trial(nonMemoizing, 100000);
+var a = trial(explicitlyCompile, 10000);
+var b = trial(memoizingCompiler, 2000);
+var c = trial(memoizingEvaluator, 1000);
+var d = trial(nonMemoizing, 100);
 
 console.log(`explicitlyCompile is ${(b/a).toFixed(2)} times as fast as memoizingCompiler`);
 console.log(`memoizingCompiler is ${(c/b).toFixed(2)} times as fast as memoizingEvaluator`);

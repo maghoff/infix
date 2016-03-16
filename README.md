@@ -85,10 +85,17 @@ any expressions and remembers the result for reuse later:
     }
     // The numbers 100..1 are logged in descending order
 
-For one-off expressions, the non-memoizing evaluator is the most efficient. For
-loops like the above, the memoizing evaluator is about 10 times quicker than the
-non-memoizing evaluator. Still, explicitly compiling the expression and directly
-referencing the function is an additional ~10 times faster.
+The memoizing comes with a small constant time overhead. As in any optimization
+situation, choosing the most efficient strategy is a matter of measuring in a
+real scenario. However, the following rules of thumb hold true:
+
+ * For one-off expressions, the non-memoizing evaluator is the most efficient
+ * The greater the complexity of the custom number provider, the smaller the
+ difference between `compilerFor`, `memoizing.compilerFor` and `evaluatorFor`
+ * The greater the complexity of the given expression, the smaller the
+ difference between `compilerFor` and `memoizing.compilerFor`
+ * The greater the complexity of the given expression, the greater the
+ difference between any compiled version and `evaluatorFor`
 
 For even more eager compilation, it is possible to generate the JavaScript
 source code for the generated functions by using `infix.codegen`:

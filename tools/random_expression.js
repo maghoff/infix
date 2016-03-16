@@ -1,22 +1,15 @@
-#!/usr/bin/env node
-
 var ast = require('../ast');
-var expressionGenerator = require('../expression_generator');
 
-function generateTree(depth) {
+module.exports = function generateTree(depth, args) {
 	if (depth === 1) {
-		if (Math.random() < 0.8) {
-			return new ast.IntegerLiteral((Math.random()*100).toFixed(0).toString());
+		if (args && (Math.random() < 0.2)) {
+			return new ast.Reference(Math.floor(Math.random()*args).toFixed(0).toString());
 		} else {
-			return new ast.Reference((Math.random()*5).toFixed(0).toString());
+			return new ast.IntegerLiteral((Math.random()*100).toFixed(0).toString());
 		}
 	} else return new ast.BinaryOperation(
-		generateTree(depth-1),
+		generateTree(depth-1, args),
 		"+-*/".substr(Math.floor(Math.random() * 4), 1),
-		generateTree(depth-1)
+		generateTree(depth-1, args)
 	);
-}
-
-for (var i=0; i<10000; ++i) {
-	console.log(expressionGenerator.generate(generateTree(5)));
-}
+};
